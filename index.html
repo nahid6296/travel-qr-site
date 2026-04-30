@@ -1,1 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Palash & Rupsona Trip</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #050712;
+      --card-bg: #111320;
+      --accent: #ff8fb1;
+      --accent-2: #7dd3fc;
+      --text-primary: #f9fafb;
+      --text-muted: #9ca3af;
+      --border-subtle: #1f2933;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #1f2937 0, #020617 55%, #000 100%);
+      color: var(--text-primary);
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      background: rgba(15,23,42,0.95);
+      border-radius: 18px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.75);
+      padding: 24px 20px 28px;
+    }
+
+    .greeting-title {
+      font-family: "Pacifico", cursive;
+      font-size: 1.8rem;
+      text-align: center;
+      color: var(--accent);
+      text-shadow: 0 0 12px rgba(248, 113, 150, 0.55);
+      margin-bottom: 10px;
+    }
+
+    .greeting-block {
+      text-align: center;
+      margin-bottom: 22px;
+      line-height: 1.6;
+    }
+
+    .greeting-line {
+      font-size: 0.98rem;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .greeting-line.muted {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .section {
+      background: var(--card-bg);
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      padding: 14px 14px 12px;
+      margin-top: 16px;
+    }
+
+    .section-header {
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      margin-bottom: 10px;
+    }
+
+    .section-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .ticket-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .ticket-button {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: none;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #f97316, #ec4899);
+      color: #0b1020;
+      box-shadow: 0 10px 25px rgba(248, 113, 113, 0.3);
+      transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s ease;
+    }
+
+    .ticket-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(248, 113, 113, 0.4);
+      filter: brightness(1.05);
+    }
+
+    .ticket-button:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 18px rgba(248, 113, 113, 0.25);
+      filter: brightness(0.98);
+    }
+
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .contact-card {
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    .contact-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #f9fafb;
+    }
+
+    .contact-role {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-2);
+      margin-bottom: 3px;
+    }
+
+    .contact-phone a {
+      font-size: 0.9rem;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .contact-phone a:hover {
+      text-decoration: underline;
+    }
+
+    .placeholder {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .footer-note {
+      margin-top: 14px;
+      font-size: 0.75rem;
+      text-align: center;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="greeting-block">
+      <div class="greeting-title" id="greeting-title">Hii Palash &amp; Rupsona</div>
+      <p class="greeting-line">Hope you are enjoying your days of togetherness.</p>
+      <p class="greeting-line">
+        Your tickets are not yet here but rest assured you'll be informed once your tickets are available.
+      </p>
+      <p class="greeting-line muted">Till then sit back, relax and enjoy...</p>
+    </div>
+
+    <!-- Tickets section -->
+    <div id="tickets-section" class="section">
+      <div class="section-header">Here are the tickets of your journey</div>
+      <div id="tickets-content" class="ticket-list"></div>
+      <div id="tickets-placeholder" class="placeholder">
+        Your tickets will appear here once they are ready.
+      </div>
+    </div>
+
+    <!-- Contacts section -->
+    <div id="contacts-section" class="section">
+      <div class="section-header" id="contacts-header">
+        Here is the person you should contact
+      </div>
+      <div id="contacts-content" class="contact-list"></div>
+      <div id="contacts-placeholder" class="placeholder">
+        Contact details will appear here when added.
+      </div>
+    </div>
+
+    <div class="footer-note">
+      This page updates automatically when your tickets are added.
+    </div>
+  </div>
+
+  <!-- Firebase SDKs (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+  <script>
+    // Replace with your own config from Firebase console
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const greetingTitle = document.getElementById('greeting-title');
+    const ticketsContent = document.getElementById('tickets-content');
+    const ticketsPlaceholder = document.getElementById('tickets-placeholder');
+    const contactsContent = document.getElementById('contacts-content');
+    const contactsPlaceholder = document.getElementById('contacts-placeholder');
+    const contactsHeader = document.getElementById('contacts-header');
+
+    // Firestore document: couple/main
+    const docRef = db.collection('couple').doc('main');
+
+    docRef.onSnapshot(doc => {
+      if (!doc.exists) {
+        ticketsPlaceholder.style.display = 'block';
+        contactsPlaceholder.style.display = 'block';
+        return;
+      }
+
+      const data = doc.data() || {};
+      const names = data.names || 'Palash & Rupsona';
+      const tickets = Array.isArray(data.tickets) ? data.tickets : [];
+      const contacts = Array.isArray(data.contacts) ? data.contacts : [];
+
+      // Greeting
+      greetingTitle.textContent = 'Hii ' + names;
+
+      // Tickets
+      ticketsContent.innerHTML = '';
+      if (tickets.length > 0) {
+        ticketsPlaceholder.style.display = 'none';
+        tickets.forEach(t => {
+          if (!t.label || !t.url) return;
+          const a = document.createElement('a');
+          a.className = 'ticket-button';
+          a.textContent = t.label;
+          a.href = t.url;
+          a.setAttribute('download', '');
+          ticketsContent.appendChild(a);
+        });
+      } else {
+        ticketsPlaceholder.style.display = 'block';
+      }
+
+      // Contacts
+      contactsContent.innerHTML = '';
+      if (contacts.length > 0) {
+        contactsPlaceholder.style.display = 'none';
+        if (contacts.length > 1) {
+          contactsHeader.textContent = 'Here are the people you should contact';
+        } else {
+          contactsHeader.textContent = 'Here is the person you should contact';
+        }
+
+        contacts.forEach(c => {
+          if (!c.name && !c.phone) return;
+          const card = document.createElement('div');
+          card.className = 'contact-card';
+
+          if (c.role) {
+            const role = document.createElement('div');
+            role.className = 'contact-role';
+            role.textContent = c.role;
+            card.appendChild(role);
+          }
+
+          if (c.name) {
+            const name = document.createElement('div');
+            name.className = 'contact-name';
+            name.textContent = c.name;
+            card.appendChild(name);
+          }
+
+          if (c.phone) {
+            const phoneDiv = document.createElement('div');
+            phoneDiv.className = 'contact-phone';
+            const a = document.createElement('a');
+            a.href = 'tel:' + c.phone.replace(/\s+/g, '');
+            a.textContent = c.phone;
+            phoneDiv.appendChild(a);
+            card.appendChild(phoneDiv);
+          }
+
+          contactsContent.appendChild(card);
+        });
+      } else {
+        contactsPlaceholder.style.display = 'block';
+        contactsHeader.textContent = 'Here is the person you should contact';
+      }
+    }, err => {
+      console.error('Error loading config', err);
+    });
+  </script>
+</body>
+</html>
