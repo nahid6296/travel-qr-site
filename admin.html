@@ -1,1 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Trip Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #020617;
+      --card-bg: #0f172a;
+      --accent: #38bdf8;
+      --accent-2: #f97316;
+      --text-primary: #f9fafb;
+      --text-muted: #9ca3af;
+      --border-subtle: #1f2937;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #1f2937 0, #020617 55%, #000 100%);
+      color: var(--text-primary);
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      padding: 24px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 520px;
+      background: rgba(15,23,42,0.96);
+      border-radius: 18px;
+      border: 1px solid var(--border-subtle);
+      padding: 22px 20px 24px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.85);
+    }
+
+    h1 {
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      background: #020617;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+
+    input:focus {
+      outline: 1px solid var(--accent);
+    }
+
+    button {
+      border-radius: 999px;
+      border: none;
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #020617;
+      margin-top: 4px;
+    }
+
+    button.secondary {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .error {
+      font-size: 0.82rem;
+      color: #fecaca;
+      margin-top: 4px;
+      min-height: 16px;
+    }
+
+    .section {
+      border-top: 1px solid rgba(148,163,184,0.3);
+      margin-top: 16px;
+      padding-top: 12px;
+    }
+
+    .section-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--accent);
+    }
+
+    .item-row {
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,0.25);
+      padding: 8px 10px;
+      margin-bottom: 8px;
+      background: rgba(15,23,42,0.9);
+    }
+
+    .row-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .small {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .logout-btn {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+    }
+
+    .save-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    .status {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      min-height: 18px;
+    }
+
+    #admin-panel {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <!-- Login form -->
+    <div id="login-panel">
+      <h1>Trip Admin</h1>
+      <p class="subtitle">Sign in to configure tickets and contacts for Palash &amp; Rupsona.</p>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" autocomplete="username" />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" autocomplete="current-password" />
+
+      <button id="login-btn">Log in</button>
+      <div id="login-error" class="error"></div>
+    </div>
+
+    <!-- Admin panel -->
+    <div id="admin-panel">
+      <div class="top-row">
+        <div>
+          <h1>Trip Config</h1>
+          <p class="subtitle">Manage greeting, ticket buttons and contact details.</p>
+        </div>
+        <button id="logout-btn" class="secondary logout-btn">Log out</button>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Greeting</div>
+        <label for="names-input">Names (for "Hii &lt;names&gt;")</label>
+        <input id="names-input" type="text" placeholder="Palash & Rupsona" />
+      </div>
+
+      <div class="section">
+        <div class="section-title">Tickets</div>
+        <div id="tickets-list"></div>
+        <button id="add-ticket-btn" type="button">+ Add Ticket</button>
+        <p class="small">
+          Use full URLs to PDFs on GitHub Pages, e.g.<br>
+          https://your-username.github.io/your-repo/tickets/to-njp.pdf
+        </p>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Contacts</div>
+        <div id="contacts-list"></div>
+        <button id="add-contact-btn" type="button">+ Add Contact</button>
+      </div>
+
+      <div class="save-row section">
+        <button id="save-btn">Save changes</button>
+        <div id="save-status" class="status"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+  <script>
+    // Same Firebase config as index.html
+    const firebaseConfig = {
+      apiKey: "AIzaSyBI05fWjk3kz4Z2Ypkv4pPms5iHJlwLe8I",
+      authDomain: "travel-qr-site-a2ea0.firebaseapp.com",
+      projectId: "travel-qr-site-a2ea0",
+      storageBucket: "travel-qr-site-a2ea0.firebasestorage.app",
+      messagingSenderId: "1919120082507",
+      appId: "1:1919120082507:web:26339ff9fa67a1af8bfbce"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+
+    const loginPanel = document.getElementById('login-panel');
+    const adminPanel = document.getElementById('admin-panel');
+    const loginBtn = document.getElementById('login-btn');
+    const logoutBtn = document.getElementById('logout-btn');
+    const loginError = document.getElementById('login-error');
+    const saveStatus = document.getElementById('save-status');
+
+    const namesInput = document.getElementById('names-input');
+    const ticketsList = document.getElementById('tickets-list');
+    const contactsList = document.getElementById('contacts-list');
+    const addTicketBtn = document.getElementById('add-ticket-btn');
+    const addContactBtn = document.getElementById('add-contact-btn');
+    const saveBtn = document.getElementById('save-btn');
+
+    // Firestore document: couple/main
+    const tripDocRef = db.collection('couple').doc('main');
+
+    function showLogin() {
+      loginPanel.style.display = 'block';
+      adminPanel.style.display = 'none';
+    }
+
+    function showAdmin() {
+      loginPanel.style.display = 'none';
+      adminPanel.style.display = 'block';
+    }
+
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        showAdmin();
+        loadConfig();
+      } else {
+        showLogin();
+      }
+    });
+
+    loginBtn.addEventListener('click', async () => {
+      loginError.textContent = '';
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      try {
+        await auth.signInWithEmailAndPassword(email, password);
+      } catch (err) {
+        loginError.textContent = err.message || 'Login failed.';
+      }
+    });
+
+    logoutBtn.addEventListener('click', async () => {
+      await auth.signOut();
+    });
+
+    function addTicketRow(ticket = { label: '', url: '' }) {
+      const div = document.createElement('div');
+      div.className = 'item-row';
+
+      const labelInputId = 'ticket-label-' + Math.random().toString(36).slice(2);
+      const urlInputId = 'ticket-url-' + Math.random().toString(36).slice(2);
+
+      div.innerHTML = `
+        <label for="${labelInputId}">Button text</label>
+        <input id="${labelInputId}" type="text" value="${ticket.label || ''}">
+        <label for="${urlInputId}">Ticket URL</label>
+        <input id="${urlInputId}" type="text" value="${ticket.url || ''}">
+        <div class="row-actions">
+          <button type="button" class="secondary remove-btn">Remove</button>
+        </div>
+      `;
+
+      div.querySelector('.remove-btn').addEventListener('click', () => {
+        ticketsList.removeChild(div);
+      });
+
+      ticketsList.appendChild(div);
+    }
+
+    function addContactRow(contact = { name: '', role: '', phone: '' }) {
+      const div = document.createElement('div');
+      div.className = 'item-row';
+
+      const nameId = 'contact-name-' + Math.random().toString(36).slice(2);
+      const roleId = 'contact-role-' + Math.random().toString(36).slice(2);
+      const phoneId = 'contact-phone-' + Math.random().toString(36).slice(2);
+
+      div.innerHTML = `
+        <label for="${nameId}">Name</label>
+        <input id="${nameId}" type="text" value="${contact.name || ''}">
+        <label for="${roleId}">Role/label (optional)</label>
+        <input id="${roleId}" type="text" value="${contact.role || ''}">
+        <label for="${phoneId}">Mobile number</label>
+        <input id="${phoneId}" type="text" value="${contact.phone || ''}">
+        <div class="row-actions">
+          <button type="button" class="secondary remove-btn">Remove</button>
+        </div>
+      `;
+
+      div.querySelector('.remove-btn').addEventListener('click', () => {
+        contactsList.removeChild(div);
+      });
+
+      contactsList.appendChild(div);
+    }
+
+    addTicketBtn.addEventListener('click', () => addTicketRow());
+    addContactBtn.addEventListener('click', () => addContactRow());
+
+    async function loadConfig() {
+      saveStatus.textContent = 'Loading...';
+      ticketsList.innerHTML = '';
+      contactsList.innerHTML = '';
+      try {
+        const snap = await tripDocRef.get();
+        if (snap.exists) {
+          const data = snap.data() || {};
+          namesInput.value = data.names || '';
+
+          const tickets = Array.isArray(data.tickets) ? data.tickets : [];
+          const contacts = Array.isArray(data.contacts) ? data.contacts : [];
+          tickets.forEach(t => addTicketRow(t));
+          contacts.forEach(c => addContactRow(c));
+        }
+        saveStatus.textContent = 'Config loaded.';
+      } catch (err) {
+        console.error('Error loading config', err);
+        saveStatus.textContent = 'Failed to load.';
+      }
+    }
+
+    saveBtn.addEventListener('click', async () => {
+      saveStatus.textContent = 'Saving...';
+
+      const names = namesInput.value.trim();
+
+      const tickets = [];
+      const ticketRows = ticketsList.querySelectorAll('.item-row');
+      ticketRows.forEach(row => {
+        const inputs = row.querySelectorAll('input');
+        const label = inputs[0].value.trim();
+        const url = inputs[1].value.trim();
+        if (label || url) {
+          tickets.push({ label, url });
+        }
+      });
+
+      const contacts = [];
+      const contactRows = contactsList.querySelectorAll('.item-row');
+      contactRows.forEach(row => {
+        const inputs = row.querySelectorAll('input');
+        const name = inputs[0].value.trim();
+        const role = inputs[1].value.trim();
+        const phone = inputs[2].value.trim();
+        if (name || phone) {
+          contacts.push({ name, role, phone });
+        }
+      });
+
+      try {
+        await tripDocRef.set({ names, tickets, contacts }, { merge: true });
+        saveStatus.textContent = 'Saved.';
+      } catch (err) {
+        console.error('Error saving config', err);
+        saveStatus.textContent = 'Save failed.';
+      }
+    });
+  </script>
+</body>
+</html>
