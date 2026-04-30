@@ -87,11 +87,6 @@
       margin-bottom: 10px;
     }
 
-    .section-text {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
     .ticket-list {
       display: flex;
       flex-direction: column;
@@ -221,11 +216,14 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
   <script>
-    // Replace with your own config from Firebase console
+    // Your Firebase config (from console)
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
+      apiKey: "AIzaSyBI05fWjk3kz4Z2Ypkv4pPms5iHJlwLe8I",
+      authDomain: "travel-qr-site-a2ea0.firebaseapp.com",
+      projectId: "travel-qr-site-a2ea0",
+      storageBucket: "travel-qr-site-a2ea0.firebasestorage.app",
+      messagingSenderId: "1919120082507",
+      appId: "1:1919120082507:web:26339ff9fa67a1af8bfbce"
     };
 
     firebase.initializeApp(firebaseConfig);
@@ -296,10 +294,10 @@
           }
 
           if (c.name) {
-            const name = document.createElement('div');
-            name.className = 'contact-name';
-            name.textContent = c.name;
-            card.appendChild(name);
+            const nameDiv = document.createElement('div');
+            nameDiv.className = 'contact-name';
+            nameDiv.textContent = c.name;
+            card.appendChild(nameDiv);
           }
 
           if (c.phone) {
